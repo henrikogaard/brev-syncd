@@ -29,3 +29,31 @@ security validation exists because this bootstrap is documentation-only.
 **Next:** Complete the Phase 0 decisions in `docs/HANDOVER.md`, create synthetic
 protocol test vectors, and obtain focused security review before scaffolding the
 daemon.
+
+# 2026-08-10 — Agent — V1 exposure and metadata-leakage decision
+
+## Goal
+
+Record Henrik's accepted v1 transport exposure, privacy disclosure, and
+instance-ownership boundary from the Phase 0 decision map.
+
+## Changes
+
+- Added ADR-0002: loopback daemon, maintained TLS/private-network proxy for
+  reachability, no direct public listener, no padding guarantee, and one owner
+  and Workspace per instance.
+- Updated deployment, architecture, threat model, plan, and handover guidance.
+
+## Verification
+
+- `git diff --check`.
+- Local Markdown-link inspection.
+
+## Skipped
+
+- Documentation-only protocol decision; no listener, proxy, daemon, or client
+  implementation exists yet.
+
+## Next
+
+The map can next resolve client-only mail-locator and merge-safety semantics.

@@ -36,9 +36,9 @@ payload-encryption boundary.
 - Graceful shutdown completes or rolls back current transactions.
 - Database migrations run under a lock and fail without partially advancing.
 
-The daemon should refuse an insecure non-loopback production listener. Public
-transport belongs behind HTTPS or an explicitly implemented daemon TLS mode
-accepted by a later decision.
+V1 binds the daemon to loopback. Any reachable LAN, tailnet, or public
+transport is terminated by a maintained TLS or private-network proxy. V1 does
+not implement a direct public daemon listener.
 
 ## LAN-only
 
@@ -103,10 +103,11 @@ Constraints:
 The encrypted payload prevents a TLS-terminating proxy from reading domain
 metadata, assuming the client protocol is correctly implemented.
 
-## Direct public HTTPS
+## Public HTTPS through a reverse proxy
 
-Advanced users may expose the daemon through Caddy, nginx, Traefik, HAProxy, or
-another maintained proxy.
+Advanced users may expose the loopback daemon through Caddy, nginx, Traefik,
+HAProxy, or another maintained TLS reverse proxy. The daemon must not be
+forwarded directly to the Internet.
 
 Required documentation before support:
 
@@ -119,7 +120,8 @@ Required documentation before support:
 - daemon application authentication;
 - update, backup, and incident response.
 
-Never recommend forwarding a plaintext daemon port directly to the Internet.
+V1 does not support a direct daemon TLS listener. Supporting one later requires
+a separate architecture and public-exposure review.
 
 ## VPS
 
