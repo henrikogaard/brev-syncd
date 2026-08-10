@@ -24,6 +24,10 @@ Phase 0 exit gate in [`PLAN.md`](PLAN.md) is satisfied.
   credentials, cleartext content, or raw message locators.
 - Meaningful merge and identity decisions happen on clients.
 - The daemon persists authenticated opaque operations and snapshots in SQLite.
+- V1 requires a user-held offline recovery secret as well as surviving-device
+  recovery; the daemon never receives recovery material.
+- Revocation immediately blocks new requests and protects future payload-key
+  epochs only. Retained ciphertext is not re-encrypted in v1.
 
 ## Important precision
 
@@ -61,10 +65,6 @@ or production data.
 
 ## Decisions still requiring Henrik
 
-- Whether offline recovery is required in v1 or whether a surviving authorized
-  device is the only recovery path.
-- Whether revoked-device key rotation must re-encrypt retained snapshots or only
-  protect future epochs.
 - Accepted ciphertext padding/traffic-analysis leakage for v1.
 - Whether one daemon instance may host multiple unrelated owners at v1.
 - Whether a public direct listener is supported by the daemon itself or only
@@ -84,7 +84,7 @@ or production data.
   the reliable baseline.
 - Tailscale and Cloudflare reduce exposure but introduce their own control-plane
   or transport metadata. Application authentication remains mandatory.
-- Losing every authorized device and recovery secret may make encrypted server
+- Losing every authorized device and recovery secret makes encrypted server
   data permanently unrecoverable.
 
 ## Suggested first implementation constraints

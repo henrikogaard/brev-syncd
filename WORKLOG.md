@@ -29,3 +29,32 @@ security validation exists because this bootstrap is documentation-only.
 **Next:** Complete the Phase 0 decisions in `docs/HANDOVER.md`, create synthetic
 protocol test vectors, and obtain focused security review before scaffolding the
 daemon.
+
+# 2026-08-10 — Agent — Recovery and revocation decision
+
+## Goal
+
+Record Henrik's accepted v1 recovery and revoked-device boundary from the Phase
+0 decision map.
+
+## Changes
+
+- Added ADR-0001: offline recovery secret, no daemon-held recovery material,
+  immediate request rejection after revocation, and future-epoch rotation only.
+- Updated the protocol, plan, threat model, architecture, and handover to match
+  the decision.
+
+## Verification
+
+- `git diff --check`.
+- Local Markdown-link inspection.
+
+## Skipped
+
+- Documentation-only protocol decision; no daemon, client, cryptographic
+  primitive, or test-vector implementation exists yet.
+
+## Next
+
+Define recovery-package bytes, authority replacement, epoch distribution, and
+negative vectors only after the remaining Phase 0 decisions are resolved.

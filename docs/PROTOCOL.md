@@ -207,18 +207,30 @@ Required failure behaviour: expiry, cancellation, replay, approval by revoked
 device, transcript substitution, multiple approvals, abandoned request, and
 wrong-instance QR.
 
-## Revocation and rekey
+## Recovery, revocation, and rekey
 
-Server-side revocation immediately rejects subsequent requests from the device.
-It does not erase information already downloaded by that device.
+V1 requires a user-held offline recovery secret as well as normal recovery from
+a surviving authorized device. The daemon must never receive the recovery
+secret, workspace content-encryption key, or a server-recoverable equivalent.
+The exact recovery package, authority replacement, secret format, and secure
+user-facing storage guidance remain byte-level Phase 0 work.
 
-Client-side future secrecy requires a new payload key epoch distributed only to
-remaining authorized devices. Phase 0 must decide:
+If every authorized device and the recovery secret are lost, the encrypted
+workspace is permanently unrecoverable. This is an explicit confidentiality
+trade-off, not a daemon failure mode that the server can repair.
 
-- whether retained snapshots/operations are re-encrypted;
+Server-side revocation immediately rejects subsequent requests from that device.
+It does not erase information already downloaded by that device. Remaining
+authorized clients rotate to a new payload-key epoch. V1 protects future
+epochs only: retained operations and snapshots are not re-encrypted merely for
+revocation.
+
+Phase 0 still must define:
+
 - how offline authorized devices receive the new epoch;
 - how clients distinguish revoked-device operations accepted before revocation;
-- whether one authority device is special or authority can rotate.
+- whether one authority device is special or authority can rotate;
+- recovery and revocation bytes, associated data, and negative test vectors.
 
 ## Push/pull operations
 
