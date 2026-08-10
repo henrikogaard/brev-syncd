@@ -60,3 +60,29 @@ the Phase 0 protocol decision map.
 
 Create the Phase 0 Wayfinder map and begin with the recovery/revocation
 decision, not service scaffolding.
+
+# 2026-08-10 — Agent — Phase 0 decision map
+
+## Goal
+
+Create the GitHub planning map that holds the remaining Phase 0 decisions
+without beginning daemon implementation.
+
+## Changes
+
+- Created [Phase 0 protocol decision map](https://github.com/henrikogaard/brev-syncd/issues/3).
+- Added its four native child decision issues: recovery/revocation, metadata
+  leakage/network exposure, mail-locator/merge safety, and Phase 0 review
+  evidence.
+- Corrected three duplicate setup issues by detaching, marking, and closing
+  them; the map contains only the canonical child issues.
+
+## Verification
+
+- Read back the map and its native child-issue list through the GitHub API.
+- Confirmed the documentation branch remains clean after its workflow commit.
+
+## Next
+
+Henrik answers the four frontier decisions. Do not claim or resolve a decision
+issue until its explicit claim has been posted and verified.
