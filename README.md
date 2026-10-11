@@ -74,6 +74,8 @@ operations when the daemon is reachable again.
 | [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) | Assets, threats, mitigations, and residual risks |
 | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Supported local and hosted deployment profiles |
 | [`docs/RESOURCES.md`](docs/RESOURCES.md) | Required upstream standards and Brev context |
+| [`CONTEXT.md`](CONTEXT.md) | Canonical domain language for protocol and product decisions |
+| [`docs/agents/`](docs/agents/) | Issue-tracker, triage, and agent-workflow conventions |
 | [`SECURITY.md`](SECURITY.md) | Private vulnerability reporting policy |
 | [`WORKLOG.md`](WORKLOG.md) | Factual agent/session handoffs |
 
