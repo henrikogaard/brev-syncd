@@ -59,7 +59,7 @@ recovery procedures.
 | Replay | Monotonic per-device counter atomically stored with accepted batch | Restore/counter rollback design must be proven |
 | Envelope tampering | Sign full canonical envelope; AEAD associated data | Canonicalization differences require cross-language vectors |
 | Ciphertext substitution | Bind version/workspace/device/op/counter/epoch in signature/AAD | Exact field set must be frozen before code |
-| Revoked device continues | Immediate server rejection; rotate future content epoch | Previously downloaded plaintext cannot be revoked |
+| Revoked device continues | Immediate server rejection; rotate future content epoch without re-encrypting retained ciphertext | Previously downloaded plaintext and older epochs already held by the device cannot be revoked |
 | Malicious snapshot rollback | Signed snapshots, local checkpoints, retained operation tail | Full equivocation/fork detection may remain out of v1 scope |
 | Server omits/reorders operations | Sequence continuity and client checkpoints | Server can deny service; fork detection needs explicit design |
 | Wrong message receives state | Multi-locator client match; ambiguity quarantine | Provider quirks require live synthetic-account testing |
@@ -71,7 +71,7 @@ recovery procedures.
 | Sensitive logs | Logs off/minimal by default; structured allowlist fields | OS/proxy logs remain outside daemon control |
 | Malicious dependency/update | Minimal dependencies, pinning, SBOM, signed releases, review | Build system/account compromise remains possible |
 | Pairing interception | Authenticated transcript, ephemeral X25519, human fingerprint, expiry | Human approval can still be socially engineered |
-| All devices lost | Optional reviewed recovery or documented permanent-loss model | Recovery convenience can weaken confidentiality |
+| All devices lost | User-held offline recovery secret plus surviving-device recovery; daemon never holds recovery material | Loss of every authorized device and the recovery secret is permanent; recovery-secret compromise can weaken confidentiality |
 
 ## Privacy threats
 

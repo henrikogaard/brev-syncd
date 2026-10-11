@@ -87,6 +87,35 @@ without beginning daemon implementation.
 Henrik answers the four frontier decisions. Do not claim or resolve a decision
 issue until its explicit claim has been posted and verified.
 
+# 2026-08-10 — Agent — Recovery and revocation decision
+
+## Goal
+
+Record Henrik's accepted v1 recovery and revoked-device boundary from the Phase
+0 decision map.
+
+## Changes
+
+- Added ADR-0001: offline recovery secret, no daemon-held recovery material,
+  immediate request rejection after revocation, and future-epoch rotation only.
+- Updated the protocol, plan, threat model, architecture, and handover to match
+  the decision.
+
+## Verification
+
+- `git diff --check`.
+- Local Markdown-link inspection.
+
+## Skipped
+
+- Documentation-only protocol decision; no daemon, client, cryptographic
+  primitive, or test-vector implementation exists yet.
+
+## Next
+
+Define recovery-package bytes, authority replacement, epoch distribution, and
+negative vectors only after the remaining Phase 0 decisions are resolved.
+
 # 2026-08-10 — Agent — V1 exposure and metadata-leakage decision
 
 ## Goal
@@ -114,3 +143,29 @@ instance-ownership boundary from the Phase 0 decision map.
 ## Next
 
 The map can next resolve client-only mail-locator and merge-safety semantics.
+
+# 2026-10-11 — Agent — Rebase recovery decision onto main
+
+## Goal
+
+Make the recovery and revocation documentation branch mergeable after
+`docs/phase0-workflow` landed on `main`.
+
+## Changes
+
+- Merged `origin/main` into `docs/recovery-revocation`.
+- Kept the Phase 0 workflow, decision-map, and recovery worklog entries in
+  chronological order.
+
+## Verification
+
+- `git diff --check`.
+- Confirmed no remaining conflict markers.
+
+## Skipped
+
+- Documentation-only merge; no daemon, client, or test-vector implementation.
+
+## Next
+
+Keep the exposure-profile branch coherent with this recovery decision.
