@@ -37,8 +37,8 @@ connectivity returns.
 | Canonical encoding | Deterministic encoding for signatures and test vectors; JSON alone is not canonical without a profile |
 | Workspace authority | Define the long-lived workspace signing authority and its recovery/replacement path |
 | Pairing | Define online QR pairing, expiry, cancellation, and approval transcript |
-| Recovery | Decide whether v1 supports only surviving-device recovery or also an offline recovery secret |
-| Revocation | Define membership rejection immediately and content-key rotation for future epochs |
+| Recovery | Required: a user-held offline recovery secret plus surviving-device recovery; the daemon never receives recovery material ([ADR-0001](adr/0001-offline-recovery-and-future-epoch-revocation.md)) |
+| Revocation | Required: immediate membership rejection and future content-key rotation; retained ciphertext is not re-encrypted in v1 ([ADR-0001](adr/0001-offline-recovery-and-future-epoch-revocation.md)) |
 | Counter persistence | Prevent replay-counter or nonce reuse after crash, restore, or device migration |
 | Message identity | Define keyed locator inputs, aliasing, moves/copies, missing IDs, and ambiguity quarantine |
 | Snapshot trust | Define who may produce a snapshot and how clients reject rollback or incomplete history |

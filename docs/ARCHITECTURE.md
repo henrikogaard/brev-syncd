@@ -204,8 +204,10 @@ The daemon is not on Brev's critical local path:
 - an authorized client can reseed a new daemon from a client-created snapshot.
 
 Server backup without a surviving workspace key protects availability, not
-plaintext recovery. Losing all authorized devices and recovery material can be
-permanent.
+plaintext recovery. A surviving authorized device or user-held offline recovery
+secret can recover a workspace; the daemon never holds either recovery
+material. Losing every authorized device and the recovery secret is permanent.
+See [ADR-0001](adr/0001-offline-recovery-and-future-epoch-revocation.md).
 
 ## Multi-workspace posture
 
