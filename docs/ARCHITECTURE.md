@@ -143,6 +143,11 @@ The first privacy disclosure must enumerate at least:
 Access logging is disabled by default, but absence of logs does not mean the
 network stack cannot observe these values while serving a request.
 
+V1 explicitly accepts this metadata leakage. It does not promise ciphertext
+padding, delayed uploads, traffic shaping, anonymity, or resistance to a
+traffic-analysis observer. See
+[ADR-0002](adr/0002-v1-exposure-and-metadata-leakage.md).
+
 ## Client-encrypted domain model
 
 An encrypted operation is expected to contain:
@@ -211,7 +216,8 @@ See [ADR-0001](adr/0001-offline-recovery-and-future-epoch-revocation.md).
 
 ## Multi-workspace posture
 
-Schema and authorization should isolate workspaces from the beginning. The v1
-user experience may remain single-owner/single-workspace to reduce exposed
-administration and abuse surface. Public unauthenticated workspace registration
-is out of scope.
+Schema and authorization isolate workspaces from the beginning. V1 supports one
+owner and one Workspace per daemon instance; it does not offer shared or
+multi-owner operation. Public unauthenticated workspace registration is out of
+scope. Supporting multiple unrelated owners later requires a separate privacy,
+administration, and abuse review.

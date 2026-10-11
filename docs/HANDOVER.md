@@ -28,6 +28,12 @@ Phase 0 exit gate in [`PLAN.md`](PLAN.md) is satisfied.
   recovery; the daemon never receives recovery material.
 - Revocation immediately blocks new requests and protects future payload-key
   epochs only. Retained ciphertext is not re-encrypted in v1.
+- V1 accepts ciphertext-size, timing, operation-volume, and source-address
+  leakage; it provides no padding or traffic-shaping guarantee.
+- V1 binds the daemon to loopback and relies on Tailscale or another maintained
+  TLS/private-network reverse proxy for reachability.
+- V1 supports one owner and one workspace per instance; schema isolation does
+  not imply multi-owner product support.
 
 ## Important precision
 
@@ -65,10 +71,6 @@ or production data.
 
 ## Decisions still requiring Henrik
 
-- Accepted ciphertext padding/traffic-analysis leakage for v1.
-- Whether one daemon instance may host multiple unrelated owners at v1.
-- Whether a public direct listener is supported by the daemon itself or only
-  through a documented TLS reverse proxy.
 - Final security reviewer and acceptance evidence for Phase 0.
 
 ## Known risks to keep visible

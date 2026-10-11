@@ -42,7 +42,9 @@ connectivity returns.
 | Counter persistence | Prevent replay-counter or nonce reuse after crash, restore, or device migration |
 | Message identity | Define keyed locator inputs, aliasing, moves/copies, missing IDs, and ambiguity quarantine |
 | Snapshot trust | Define who may produce a snapshot and how clients reject rollback or incomplete history |
-| Padding | Define size classes or explicitly accept ciphertext-size leakage for v1 |
+| Padding | Required disclosure: v1 accepts ciphertext-size, timing, operation-volume, and source-address leakage; no padding or traffic-shaping guarantee ([ADR-0002](adr/0002-v1-exposure-and-metadata-leakage.md)) |
+| Network exposure | Required: loopback daemon plus a maintained TLS/private-network reverse proxy; no direct public listener in v1 ([ADR-0002](adr/0002-v1-exposure-and-metadata-leakage.md)) |
+| Instance tenancy | Required: one owner and one Workspace per v1 instance; schema isolation is not multi-owner support ([ADR-0002](adr/0002-v1-exposure-and-metadata-leakage.md)) |
 
 ### Exit gate
 

@@ -87,7 +87,9 @@ observe:
 
 Possible reductions include batching, padding size classes, delayed upload,
 minimal retention, and private-network deployment. Each adds battery, latency,
-or storage cost; Phase 0 must state the accepted v1 trade-off.
+or storage cost. V1 accepts size, timing, operation-volume, and source-address
+leakage without a padding or traffic-shaping guarantee; it must disclose that
+choice honestly. See [ADR-0002](adr/0002-v1-exposure-and-metadata-leakage.md).
 
 ## Availability threats
 
@@ -106,6 +108,7 @@ retrying idempotently, and supporting reseed from an authorized snapshot.
 
 - Preventing an authorized device from reading data it was legitimately given.
 - Hiding all traffic metadata from a global observer.
+- Ciphertext padding, delayed upload, or traffic-shaping guarantees.
 - Availability against a malicious host or large DDoS without external
   infrastructure.
 - Formal prevention of a server presenting permanent split views unless an

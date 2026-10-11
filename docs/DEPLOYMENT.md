@@ -15,7 +15,7 @@ is offline, clients keep working locally and synchronize later.
 
 | Profile | Data location | Reachability | Expected behaviour |
 | --- | --- | --- | --- |
-| LAN only | User's computer | Same network | Maximum locality; no away-from-home sync |
+| LAN only | User's computer | Same network through a LAN reverse proxy to loopback | Maximum locality; no away-from-home sync |
 | Tailscale Serve | User's computer | Private tailnet | Recommended home setup |
 | Cloudflare Tunnel | User's computer | Public hostname through Cloudflare | No inbound port forwarding; Cloudflare sees transport metadata |
 | Direct HTTPS | User's computer | Public DNS/IP through user's proxy | Maximum operator control and responsibility |
@@ -36,21 +36,36 @@ payload-encryption boundary.
 - Graceful shutdown completes or rolls back current transactions.
 - Database migrations run under a lock and fail without partially advancing.
 
-The daemon should refuse an insecure non-loopback production listener. Public
-transport belongs behind HTTPS or an explicitly implemented daemon TLS mode
-accepted by a later decision.
+V1 binds the daemon to loopback. Any reachable LAN, tailnet, or public
+transport is terminated by a maintained TLS or private-network proxy. V1 does
+not implement a direct public daemon listener.
 
 ## LAN-only
 
 Suitable when all devices synchronize at home.
 
+The daemon still binds to loopback. Other LAN devices reach it only through a
+LAN-facing reverse proxy that forwards to `http://127.0.0.1:<port>`. Opening a
+firewall port to the daemon cannot make a loopback listener reachable, and v1
+does not bind the daemon to a LAN address.
+
+Planned shape:
+
+```text
+brev-syncd -> http://127.0.0.1:8484
+LAN reverse proxy (Caddy, nginx, Traefik, or HAProxy) -> LAN clients
+```
+
 Planned characteristics:
 
-- TLS is still recommended; application signatures and payload encryption are
-  mandatory regardless.
+- TLS on the LAN-facing proxy is still recommended; application signatures and
+  payload encryption are mandatory regardless.
+- Whether a plaintext LAN proxy is acceptable in v1 remains an open question.
+  A plaintext non-loopback daemon listener is not an accepted profile.
 - Bonjour/mDNS may advertise setup discovery without workspace identity or
   sensitive status.
-- The user must handle local firewall access.
+- The user must handle local firewall access to the proxy, not to a daemon
+  listener.
 - No phone/tablet sync occurs away from the LAN.
 
 LAN discovery is convenience only and must never auto-enrol a device.
@@ -103,10 +118,11 @@ Constraints:
 The encrypted payload prevents a TLS-terminating proxy from reading domain
 metadata, assuming the client protocol is correctly implemented.
 
-## Direct public HTTPS
+## Public HTTPS through a reverse proxy
 
-Advanced users may expose the daemon through Caddy, nginx, Traefik, HAProxy, or
-another maintained proxy.
+Advanced users may expose the loopback daemon through Caddy, nginx, Traefik,
+HAProxy, or another maintained TLS reverse proxy. The daemon must not be
+forwarded directly to the Internet.
 
 Required documentation before support:
 
@@ -119,7 +135,8 @@ Required documentation before support:
 - daemon application authentication;
 - update, backup, and incident response.
 
-Never recommend forwarding a plaintext daemon port directly to the Internet.
+V1 does not support a direct daemon TLS listener. Supporting one later requires
+a separate architecture and public-exposure review.
 
 ## VPS
 
