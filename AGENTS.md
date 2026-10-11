@@ -4,6 +4,18 @@ This is the canonical working contract for agents in `brev-syncd`. Direct user
 instructions override this file. Update this file first if repository workflow
 rules change.
 
+## Agent skills
+
+Repository conventions used by planning and implementation skills live in:
+
+- [`docs/agents/issue-tracker.md`](docs/agents/issue-tracker.md) — GitHub
+  issue workflow, Wayfinder maps, claims, and dependencies.
+- [`docs/agents/triage-labels.md`](docs/agents/triage-labels.md) — the
+  repository's triage-label vocabulary.
+- [`docs/agents/domain.md`](docs/agents/domain.md) — the single-context domain
+  documentation rule.
+- [`CONTEXT.md`](CONTEXT.md) — the current ubiquitous language.
+
 ## Current stage
 
 The repository is in **Phase 0: protocol and threat-model design**. There is no
