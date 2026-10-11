@@ -169,3 +169,34 @@ Make the recovery and revocation documentation branch mergeable after
 ## Next
 
 Keep the exposure-profile branch coherent with this recovery decision.
+
+# 2026-10-11 — Agent — Align exposure profile with main and recovery
+
+## Goal
+
+Make the v1 exposure-profile branch mergeable and document what fronts a
+loopback-bound daemon on the LAN-only profile.
+
+## Changes
+
+- Merged `origin/main` and `docs/recovery-revocation` into
+  `docs/exposure-profile`.
+- Kept recovery and exposure worklog entries in chronological order and both
+  Phase 0 decisions in the overlapping protocol docs.
+- Documented the LAN-only reverse-proxy topology and the open question about
+  plaintext LAN proxies.
+
+## Verification
+
+- `git diff --check`.
+- Confirmed no remaining conflict markers.
+- Local Markdown-link inspection of the changed deployment and ADR files.
+
+## Skipped
+
+- Documentation-only protocol decision; no listener, proxy, daemon, or client
+  implementation exists yet.
+
+## Next
+
+The map can next resolve client-only mail-locator and merge-safety semantics.

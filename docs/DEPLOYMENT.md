@@ -15,7 +15,7 @@ is offline, clients keep working locally and synchronize later.
 
 | Profile | Data location | Reachability | Expected behaviour |
 | --- | --- | --- | --- |
-| LAN only | User's computer | Same network | Maximum locality; no away-from-home sync |
+| LAN only | User's computer | Same network through a LAN reverse proxy to loopback | Maximum locality; no away-from-home sync |
 | Tailscale Serve | User's computer | Private tailnet | Recommended home setup |
 | Cloudflare Tunnel | User's computer | Public hostname through Cloudflare | No inbound port forwarding; Cloudflare sees transport metadata |
 | Direct HTTPS | User's computer | Public DNS/IP through user's proxy | Maximum operator control and responsibility |
@@ -44,13 +44,28 @@ not implement a direct public daemon listener.
 
 Suitable when all devices synchronize at home.
 
+The daemon still binds to loopback. Other LAN devices reach it only through a
+LAN-facing reverse proxy that forwards to `http://127.0.0.1:<port>`. Opening a
+firewall port to the daemon cannot make a loopback listener reachable, and v1
+does not bind the daemon to a LAN address.
+
+Planned shape:
+
+```text
+brev-syncd -> http://127.0.0.1:8484
+LAN reverse proxy (Caddy, nginx, Traefik, or HAProxy) -> LAN clients
+```
+
 Planned characteristics:
 
-- TLS is still recommended; application signatures and payload encryption are
-  mandatory regardless.
+- TLS on the LAN-facing proxy is still recommended; application signatures and
+  payload encryption are mandatory regardless.
+- Whether a plaintext LAN proxy is acceptable in v1 remains an open question.
+  A plaintext non-loopback daemon listener is not an accepted profile.
 - Bonjour/mDNS may advertise setup discovery without workspace identity or
   sensitive status.
-- The user must handle local firewall access.
+- The user must handle local firewall access to the proxy, not to a daemon
+  listener.
 - No phone/tablet sync occurs away from the LAN.
 
 LAN discovery is convenience only and must never auto-enrol a device.
